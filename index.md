@@ -75,6 +75,23 @@ function clearFilter() {
 </div>
 
 <div id="research-posts">
+  
+<div class="research-post" data-tags="panos,vulnerability,forensics">
+  <div class="post-content">
+    <h4><a href="{{ site.baseurl }}/2026/06/04/gp_bypass_cve2026-0257">CVE-2026-0257: PAN-OS GlobalProtect Authentication Bypass</a></h4>
+    <span class="post-date">Published: June 4, 2026</span>
+    <p>Cookie Monster: How CVE-2026-0257 Turns a Trust Design Decision Into a VPN Skeleton Key</p>
+    <div class="post-tags">
+      <span class="tag" onclick="filterByTag('CVE-2026-20127')">CVE-2026-0257</span>
+      <span class="tag" onclick="filterByTag('cisco')">panos</span>
+      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
+      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
+    </div>
+  </div>
+  <div class="post-image">
+    <img src="{{ site.baseurl }}/assets/images/XXXX.png" alt="XXXX">
+  </div>
+</div>
 
 <div class="research-post" data-tags="citrix,vulnerability,forensics">
   <div class="post-content">
