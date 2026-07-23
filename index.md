@@ -75,6 +75,23 @@ function clearFilter() {
 </div>
 
 <div id="research-posts">
+
+<div class="research-post" data-tags="sonicwall,vulnerability,forensics">
+  <div class="post-content">
+    <h4><a href="{{ site.baseurl }}/2026/07/21/sonicwall_cve2026-15409">Tunnel Vision: Sonicwall Insecure Mobile Access</a></h4>
+    <span class="post-date">Published: July 22, 2026</span>
+    <p>How UTA0533 turned a WebSocket proxy and a hotfix rollback script into root on SonicWall SMA1000</p>
+    <div class="post-tags">
+      <span class="tag" onclick="filterByTag('CVE-2026-15409')">CVE-2026-15409</span>
+      <span class="tag" onclick="filterByTag('cisco')">sonicwall</span>
+      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
+      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
+    </div>
+  </div>
+  <div class="post-image">
+    <img src="{{ site.baseurl }}/assets/images/CVE-2026-15409.png" alt="CVE-2026-15409">
+  </div>
+</div>
   
 <div class="research-post" data-tags="panos,vulnerability,forensics">
   <div class="post-content">
