@@ -5,6 +5,9 @@
   <title>{{ page.title }} · GOTT Labs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{ page.description | default: site.description }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ site.baseurl }}/style.css">
   <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/favicon.png">
 </head>
@@ -17,17 +20,16 @@
       <a href="https://start.me/p/wMrA5z/cyber-threat-intelligence" class="nav-icon" title="RSS Feed Reader">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6h6V2"></path><path d="M6.5 8a8.5 8.5 0 1 0 11 0"></path><circle cx="12" cy="16" r="1"></circle></svg>
       </a>
-    </div>
       <a href="https://github.com/gottlabs/home" class="nav-icon" title="View Source Code" target="_blank" rel="noopener noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="16 18 22 12 16 6"></polyline>
           <polyline points="8 6 2 12 8 18"></polyline>
         </svg>
       </a>
+    </div>
     <button class="menu-toggle" aria-label="Toggle Menu" onclick="toggleMenu()">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
-
     <div class="nav-right" id="navRight">
       <a href="{{ site.baseurl }}/feed.xml" class="nav-icon" title="RSS Feed">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
@@ -45,20 +47,16 @@
   </nav>
 
   <main>
+    {% unless page.hide_header %}
     <header>
       <h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
       {% if page.subtitle %}
       <h2>{{ page.subtitle }}</h2>
       {% endif %}
     </header>
-    
-    {{ content }}
+    {% endunless %}
 
-    {% if page.layout == "post" %}
-    <aside class="marginalia">
-      <p>Nota bene: conclusions may age poorly.</p>
-    </aside>
-    {% endif %}
+    {{ content }}
 
     <footer>
       <p>GOTT Labs · Independent Research · Assertions backed by evidence, not optimism</p>

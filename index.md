@@ -1,369 +1,84 @@
 ---
 layout: default
 title: Home
+hide_header: true
 ---
 
-**GOTT Labs** is an independent cybersecurity research project focused on studying how threats operate in practice, how defensive systems respond under real conditions, and where theory quietly diverges from reality.
-
-This site exists to publish research. Any resemblance to marketing is coincidental.
-
-<script>
-let currentFilter = null;
-function filterByTag(tag) {
-  currentFilter = tag;
-  const posts = document.querySelectorAll('.research-post');
-  const filterTags = document.querySelectorAll('.filter-tag');
-  const postTags = document.querySelectorAll('.tag');
-    filterTags.forEach(ft => {
-    if (ft.textContent === tag) {
-      ft.classList.add('active');
-    } else {
-      ft.classList.remove('active');
-    }
-  });
-    postTags.forEach(pt => {
-    if (pt.textContent === tag) {
-      pt.classList.add('active');
-    } else {
-      pt.classList.remove('active');
-    }
-  });
-    posts.forEach(post => {
-    const tags = post.getAttribute('data-tags').toLowerCase();
-    if (tags.includes(tag.toLowerCase())) {
-      post.style.display = 'flex';
-    } else {
-      post.style.display = 'none';
-    }
-  });
-}
-function clearFilter() {
-  currentFilter = null;
-  const posts = document.querySelectorAll('.research-post');
-  const filterTags = document.querySelectorAll('.filter-tag');
-  const postTags = document.querySelectorAll('.tag');
-  filterTags.forEach(ft => ft.classList.remove('active'));
-  postTags.forEach(pt => pt.classList.remove('active'));
-  posts.forEach(post => {
-    post.style.display = 'flex';
-  });
-}
-</script>
-
-### Research/Write-ups
-
-<div class="filter-controls">
-  <div class="filter-header">
-    <span class="filter-label">Filter by Research Area:</span>
-    <button class="clear-filter" onclick="clearFilter()">Reset View</button>
-  </div>
-  <div class="filter-grid">
-    <button class="filter-tag" onclick="filterByTag('forensics')">forensics</button>
-    <button class="filter-tag" onclick="filterByTag('vulnerability')">vulnerability</button>
-    <button class="filter-tag" onclick="filterByTag('threat_groups')">threat_groups</button>
-    <button class="filter-tag" onclick="filterByTag('research')">research</button>
-    <button class="filter-tag" onclick="filterByTag('mongodb')">mongodb</button>
-    <button class="filter-tag" onclick="filterByTag('oracle_ebs')">oracle_ebs</button>
-    <button class="filter-tag" onclick="filterByTag('sap_netweaver')">sap_netweaver</button>
-    <button class="filter-tag" onclick="filterByTag('fortinet')">fortinet</button>
-    <button class="filter-tag" onclick="filterByTag('panos')">panos</button>
-    <button class="filter-tag" onclick="filterByTag('sonicwall')">sonicwall</button>
-    <button class="filter-tag" onclick="filterByTag('ivanti')">ivanti</button>
-    <button class="filter-tag" onclick="filterByTag('cisco')">cisco</button>
-    <button class="filter-tag" onclick="filterByTag('cisco')">citrix</button>
-  </div>
+<div class="hero">
+  <div class="eyebrow">Independent security research</div>
+  <h1 class="headline">Where threat theory meets defensive reality.</h1>
+  <p class="lede">GOTT Labs studies how intrusions actually happen, how defenses actually respond, and where the gap between the two quietly opens.</p>
+  {% assign post_count = site.posts | size %}
+  <div class="logline">{{ post_count }} write-ups <span>·</span> research on forensics, vulnerabilities, and threat groups</div>
 </div>
 
-<div id="research-posts">
+<div class="filters-label">Filter by research area</div>
+<div class="filters">
+  <button class="filter-tag active" onclick="filterByTag('all')">all</button>
+  <button class="filter-tag" onclick="filterByTag('forensics')">forensics</button>
+  <button class="filter-tag" onclick="filterByTag('vulnerability')">vulnerability</button>
+  <button class="filter-tag" onclick="filterByTag('threat_groups')">threat_groups</button>
+  <button class="filter-tag" onclick="filterByTag('research')">research</button>
+  <button class="filter-tag" onclick="filterByTag('mongodb')">mongodb</button>
+  <button class="filter-tag" onclick="filterByTag('oracle_ebs')">oracle_ebs</button>
+  <button class="filter-tag" onclick="filterByTag('sap_netweaver')">sap_netweaver</button>
+  <button class="filter-tag" onclick="filterByTag('fortinet')">fortinet</button>
+  <button class="filter-tag" onclick="filterByTag('panos')">panos</button>
+  <button class="filter-tag" onclick="filterByTag('sonicwall')">sonicwall</button>
+  <button class="filter-tag" onclick="filterByTag('ivanti')">ivanti</button>
+  <button class="filter-tag" onclick="filterByTag('cisco')">cisco</button>
+  <button class="filter-tag" onclick="filterByTag('citrix')">citrix</button>
+  <button class="filter-tag" onclick="filterByTag('wsus')">wsus</button>
+</div>
 
-<div class="research-post" data-tags="sonicwall,vulnerability,forensics">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/07/21/sonicwall_cve2026-15409">Tunnel Vision: Sonicwall Insecure Mobile Access</a></h4>
-    <span class="post-date">Published: July 22, 2026</span>
-    <p>How UTA0533 turned a WebSocket proxy and a hotfix rollback script into root on SonicWall SMA1000</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2026-15409')">CVE-2026-15409</span>
-      <span class="tag" onclick="filterByTag('cisco')">sonicwall</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
+<div class="ledger" id="research-posts">
+{% for post in site.posts %}
+  {% assign tags_lower = "" %}
+  {% for t in post.tags %}{% assign tags_lower = tags_lower | append: t | append: "," %}{% endfor %}
+  {% assign is_critical = false %}
+  {% if post.cvss_score and post.cvss_score >= 9 %}{% assign is_critical = true %}{% endif %}
+  <a class="research-post{% if is_critical %} critical{% endif %}" href="{{ site.baseurl }}{{ post.url }}" data-tags="{{ tags_lower | downcase }}">
+    <div class="meta">
+      <span>{{ post.date | date: "%Y-%m-%d" }}</span>
+      {% if post.stamp_label %}
+      <span class="stamp {% if is_critical %}red{% else %}amber{% endif %}">{{ post.stamp_label }}</span>
+      {% endif %}
     </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2026-15409.png" alt="CVE-2026-15409">
-  </div>
-</div>
-  
-<div class="research-post" data-tags="panos,vulnerability,forensics">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/06/04/gp_bypass_cve2026-0257">CVE-2026-0257: PAN-OS GlobalProtect Authentication Bypass</a></h4>
-    <span class="post-date">Published: June 4, 2026</span>
-    <p>Cookie Monster: How CVE-2026-0257 Turns a Trust Design Decision Into a VPN Skeleton Key</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2026-20127')">CVE-2026-0257</span>
-      <span class="tag" onclick="filterByTag('cisco')">panos</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
+    <div class="row">
+      <div class="col-text">
+        <h4>{{ post.title }}</h4>
+        {% if post.subtitle %}<p class="post-dek">{{ post.subtitle }}</p>{% endif %}
+        <div class="post-tags">
+          {% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </div>
+      </div>
+      <div class="post-image" role="img" aria-label="Thumbnail for {{ post.title }}" style="background-image:url('{{ site.baseurl }}{{ post.header_image }}');"></div>
     </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2026-0257.png" alt="CVE-2026-0257">
-  </div>
-</div>
-
-<div class="research-post" data-tags="citrix,vulnerability,forensics">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/04/19/netscaler_cve2026-3055">CitrixBleed 3: The Franchise Nobody Asked For</a></h4>
-    <span class="post-date">Published: April  19, 2026</span>
-    <p>When your identity provider starts giving away memories it was supposed to keep</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2026-20127')">CVE-2026-3055</span>
-      <span class="tag" onclick="filterByTag('cisco')">citrix</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2026-3055.png" alt="CVE-2026-3055">
-  </div>
-</div>
-
-<div class="research-post" data-tags="cisco,vulnerability,forensics">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/02/25/cisco_cve2026-20127">CVE-2026-20127: Cisco Catalyst SD-WAN Authentication Bypass</a></h4>
-    <span class="post-date">Published: Februrary 25, 2026</span>
-    <p>Three years of silent access, one busted peering handshake, and a control plane that belonged to someone else</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2026-20127')">CVE-2026-20127</span>
-      <span class="tag" onclick="filterByTag('cisco')">cisco</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2026-20127.png" alt="CVE-2026-20127">
-  </div>
-</div>
-
-<div class="research-post" data-tags="research,vulnerability,forensics">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/02/17/dell_cve2026-22769">Dell RecoverPoint for VMs (CVE-2026-22769)</a></h4>
-    <span class="post-date">Published: Februrary 17, 2026</span>
-    <p>When your backup appliance is also a pre-installed APT welcome mat</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2026-22769')">CVE-2026-22769</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2026-22769.png" alt="CVE-2026-22769">
-  </div>
-</div>
-
-<div class="research-post" data-tags="research,ivanti,vulnerability,forensics">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/02/15/ivanti_epmm_cve-2026-1281">CVE-2026-1281: The Art of Arithmetic Expansion</a></h4>
-    <span class="post-date">Published: Februrary 15, 2026</span>
-    <p>Forensic analysis of pre-auth RCE exploitation in Ivanti EPMM through esoteric shell evaluation mechanics</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2026-1281')">CVE-2026-1281</span>
-      <span class="tag" onclick="filterByTag('ivanti')">ivanti</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2026-1281.png" alt="CVE-2025-1281">
-  </div>
-</div>
-
-<div class="research-post" data-tags="research,threat_groups">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/01/10/tds_part1">Internet Traffic Brokers: TDS and the VexTrio Criminal Enterprise</a></h4>
-    <span class="post-date">Published: January 10, 2026</span>
-    <p>How a Billion-Dollar Cybercrime Operation Hides Behind Legitimate AdTech (Part 1)</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('research')">research</span>
-      <span class="tag" onclick="filterByTag('threat_groups')">threat_groups</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/vextrio_tds_part1.png" alt="vextrio_tds_part1">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2025-14847,mongodb,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2025/12/26/mongobleed_forensics_cve2025-14847">MongoBleed Forensics (CVE-2025-14847)</a></h4>
-    <span class="post-date">CVE Date: December 26, 2025</span>
-    <p>MongoBleed, a discussion of forensics and considerations</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2025-14847')">CVE-2025-14847</span>
-      <span class="tag" onclick="filterByTag('mongodb')">mongodb</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2025-14847.png" alt="MongoBleed">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2025-59718,fortinet,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/01/06/forti_cve2025-59718">Trust But Don't Verify (Forti CVE-2025-59718)</a></h4>
-    <span class="post-date">CVE Date: November 9, 2025</span>
-    <p>CVE-2025-59718 & CVE-2025-59719 - Who Needs Signature Verification Anyway?</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2025-59718')">CVE-2025-59718</span>
-      <span class="tag" onclick="filterByTag('fortinet')">fortinet</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2025-59718.png" alt="forti_vuln2">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2025-59287,WSUS,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/01/07/wsus_cve2025-59287">CVE-2025-59287 and the WSUS Deserialization Nightmare</a></h4>
-    <span class="post-date">CVE Date: October 10, 2025</span>
-    <p>A critical unauthenticated RCE vulnerability that turned Microsoft's patch delivery system into an attacker's dream"</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2025-61882')">CVE-2025-59287</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2025-59287.png" alt="wsus_windows">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2025-61882,oracle_ebs,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2025/10/07/oracle_ebs_cve2025-61882">Oracle EBS (CVE-2025-61882)</a></h4>
-    <span class="post-date">CVE Date: October 7, 2025</span>
-    <p>The Zero-Day That Reminded Everyone Why ERP Means "Everyone's Really Pwned"</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2025-61882')">CVE-2025-61882</span>
-      <span class="tag" onclick="filterByTag('oracle_ebs')">oracle_ebs</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2025-61882.png" alt="oracle_ebs">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2025-31324,sap_netweaver,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2025/04/26/sap_netweaver_cve2025-31324">SAP NetWeaver VC (CVE-2025-31324)</a></h4>
-    <span class="post-date">CVE Date: April 26, 2025</span>
-    <p>How an obscure endpoint turned SAP NetWeaver into a webshell wonderland</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2025-31324')">CVE-2025-31324</span>
-      <span class="tag" onclick="filterByTag('sap_netweaver')">sap_netweaver</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2025-31324.png" alt="sap_netweaver">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2024-55591,fortinet,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2025/01/14/fortigate_cve2024-55591">The FortiGate Backdoor That Wasn't A Backdoor (CVE-2024-55591)</a></h4>
-    <span class="post-date">CVE Date: January 14, 2025</span>
-    <p>When authentication is just a really aggressive suggestion</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2024-55591')">CVE-2024-55591</span>
-      <span class="tag" onclick="filterByTag('fortinet')">fortinet</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2024-55591.png" alt="forti_cve1">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2024-0012,CVE-2024-9474,panos,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2024/11/18/panos_cve2024-0012">PAN-OS (CVE-2024-0012 and CVE-2024-9474)</a></h4>
-    <span class="post-date">CVE Date: November 18, 2024</span>
-    <p>When Your Security Appliance Becomes the Vulnerability</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2024-0012')">CVE-2024-0012</span>
-      <span class="tag" onclick="filterByTag('CVE-2024-9474')">CVE-2024-9474</span>
-      <span class="tag" onclick="filterByTag('panos')">panos</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2024-0012.png" alt="panos_cve">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2024-47575,fortinet,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2024/10/23/fortijump_cve2024-47575">FortiJump Diving board (CVE-2024-47575)</a></h4>
-    <span class="post-date">CVE Date: October 23, 2024</span>
-    <p>How Missing Auth in FortiManager Let UNC5820 Play Musical Chairs with Enterprise Networks</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2024-47575')">CVE-2024-47575</span>
-      <span class="tag" onclick="filterByTag('fortinet')">fortinet</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2024-47575.png" alt="fortijump">
-  </div>
-</div>
-
-<div class="research-post" data-tags="luna_moth,threat_groups,forensics">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/01/02/luna_moth">Luna Moth: When Social Engineering Beats Malware</a></h4>
-    <span class="post-date">Post Date: January 02, 2026</span>
-    <p>How ex-Conti operators are extorting millions without writing a single line of malicious code</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('luna_moth')">luna_moth</span>
-      <span class="tag" onclick="filterByTag('threat_groups')">threat_groups</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/luna_moth.png" alt="luna_moth">
-  </div>
-</div>
-
-<div class="research-post" data-tags="CVE-2024-53704,sonicwall,forensics,vulnerability">
-  <div class="post-content">
-    <h4><a href="{{ site.baseurl }}/2026/01/05/sonicwall_cve2024-53704">CVE-2024-53704: SonicWall Session Hijack</a></h4>
-    <span class="post-date">CVE Date: November 05, 2024</span>
-    <p>When 32 Null Bytes Break Authentication and SIEM Logs Miss Everything That Matters</p>
-    <div class="post-tags">
-      <span class="tag" onclick="filterByTag('CVE-2024-53704')">CVE-2024-53704</span>
-      <span class="tag" onclick="filterByTag('sonicwall')">sonicwall</span>
-      <span class="tag" onclick="filterByTag('forensics')">forensics</span>
-      <span class="tag" onclick="filterByTag('vulnerability')">vulnerability</span>
-    </div>
-  </div>
-  <div class="post-image">
-    <img src="{{ site.baseurl }}/assets/images/CVE-2024-53704.png" alt="sonicwall">
-  </div>
-</div>
-
+  </a>
+{% endfor %}
 </div>
 
 ### Research Disclaimer
 <span class="disclaimer">
 Research published is provided for educational purposes. Findings reflect observed behavior in specific environments and should not be interpreted as universal truth, vendor endorsement, or operational guidance. Techniques discussed may be incomplete, ineffective, or rendered obsolete without notice. Readers are expected to apply judgment, skepticism, and basic security hygiene.
 </span>
+
+<script>
+function filterByTag(tag) {
+  const posts = document.querySelectorAll('.research-post');
+  const filterTags = document.querySelectorAll('.filter-tag');
+
+  filterTags.forEach(ft => {
+    ft.classList.toggle('active', ft.textContent.trim() === tag);
+  });
+
+  posts.forEach(post => {
+    if (tag === 'all') {
+      post.style.display = 'block';
+      return;
+    }
+    const tags = post.getAttribute('data-tags').toLowerCase();
+    post.style.display = tags.includes(tag.toLowerCase()) ? 'block' : 'none';
+  });
+}
+</script>
