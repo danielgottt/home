@@ -296,8 +296,8 @@ article ol li::before{
   background:var(--ink);border:2px solid var(--amber);
 }
 .timeline li strong{
-  display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
-  color:var(--amber);margin-bottom:4px;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+  color:var(--amber);
 }
 
 /* pull-quote */
@@ -351,7 +351,7 @@ th{
 }
 td{padding:8px 12px;border-bottom:1px solid var(--line-soft);color:var(--fg);font-size:14px;}
 
-hr{border:none;border-top:1px solid var(--line);margin:36px 0;}
+hr{display:none;}
 
 /* ============================================================
    Post page — related write-ups

@@ -2,6 +2,10 @@ title: GOTT Labs
 description: Independent cybersecurity research focused on threat techniques and defensive reality.
 
 markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
 theme: null
 permalink: pretty
 baseurl: "/home"
