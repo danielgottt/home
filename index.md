@@ -5,9 +5,8 @@ hide_header: true
 ---
 
 <div class="hero">
-  <div class="eyebrow">Independent security research</div>
-  <h1 class="headline">Where threat theory meets defensive reality.</h1>
-  <p class="lede">GOTT Labs studies how intrusions actually happen, how defenses actually respond, and where the gap between the two quietly opens.</p>
+  <div class="eyebrow">Security research and Stuff</div>
+  <p class="lede">How intrusions actually happen, how defenses actually respond, and where the gap between the two quietly opens.</p>
   {% assign post_count = site.posts | size %}
   <div class="logline">{{ post_count }} write-ups <span>·</span> research on forensics, vulnerabilities, and threat groups</div>
 </div>
