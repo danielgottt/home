@@ -2,7 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "home",
   "compatibility_date": "2026-08-04",
+  "routes": [
+    { "pattern": "danielgott.me", "custom_domain": true },
+    { "pattern": "www.danielgott.me", "custom_domain": true }
+  ],
   "assets": {
     "directory": "."
+  },
+  "observability": {
+    "enabled": true
   }
 }
