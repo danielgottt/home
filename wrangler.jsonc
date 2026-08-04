@@ -3,9 +3,6 @@
   "name": "home",
   "compatibility_date": "2026-08-04",
   "assets": {
-    "directory": "_site"
-  },
-  "observability": {
-    "enabled": true
+    "directory": "."
   }
 }
