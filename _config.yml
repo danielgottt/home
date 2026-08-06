@@ -8,8 +8,8 @@ kramdown:
   syntax_highlighter: rouge
 theme: null
 permalink: pretty
-baseurl: "/home"
-url: "https://gottlabs.github.io"
+baseurl: ""
+url: "https://danielgott.me"
 defaults:
   - scope:
       path: ""
