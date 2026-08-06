@@ -1,1 +1,1 @@
-https://gottlabs.github.io/home/
+danielgott.me
