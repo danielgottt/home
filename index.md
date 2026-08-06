@@ -81,3 +81,6 @@ function filterByTag(tag) {
   });
 }
 </script>
+
+<script data-goatcounter="https://danielgott.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
