@@ -1,1 +1,1 @@
-danielgott.me
+https://danielgott.me
