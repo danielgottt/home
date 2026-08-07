@@ -185,10 +185,10 @@ footer p{margin:0;}
   background-color:var(--ink);background-size:cover;background-position:center;border-radius:6px;
 }
 .post-image::before,.post-image::after{
-  content:"";position:absolute;width:12px;height:12px;border-color:var(--amber);
+  content:"";position:absolute;width:12px;height:12px;
 }
-.post-image::before{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid;}
-.post-image::after{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid;}
+.post-image::before{top:-1px;left:-1px;border-top:2px solid var(--amber);border-left:2px solid var(--amber);}
+.post-image::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--amber);border-right:2px solid var(--amber);}
 .post-image img{display:none;} /* image rendered as background on .post-image itself */
 
 .disclaimer{
