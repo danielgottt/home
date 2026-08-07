@@ -4,11 +4,31 @@ title: Home
 hide_header: true
 ---
 <div class="hero">
-  <div class="eyebrow">Security research and Stuff</div>
-  <h1 class="headline">Where threats meet reality.</h1>
-  <p class="lede">How intrusions actually happen, how defenses actually respond, and where the gap between the two quietly opens.</p>
-  {% assign post_count = site.posts | size %}
-  <div class="logline">{{ post_count }} write-ups <span>·</span> research on forensics, vulnerabilities, and threat groups</div>
+  <div class="hero-text">
+    <div class="eyebrow">Security research and Stuff</div>
+    <h1 class="headline">Where threats meet reality.</h1>
+    <p class="lede">How intrusions actually happen, how defenses actually respond, and where the gap between the two quietly opens.</p>
+    {% assign post_count = site.posts | size %}
+    <div class="logline">{{ post_count }} write-ups <span>·</span> research on forensics, vulnerabilities, and threat groups</div>
+  </div>
+  {% assign latest = site.posts.first %}
+  {% assign latest_critical = false %}
+  {% if latest.cvss_score and latest.cvss_score >= 9 %}{% assign latest_critical = true %}{% endif %}
+  <a class="featured-card" href="{{ site.baseurl }}{{ latest.url }}">
+    <div class="featured-label">Latest research</div>
+    <div class="post-image" role="img" aria-label="Thumbnail for {{ latest.title }}" style="background-image:url('{{ site.baseurl }}{{ latest.header_image }}');"></div>
+    <div class="meta">
+      <span>{{ latest.date | date: "%Y-%m-%d" }}</span>
+      {% if latest.stamp_label %}
+      <span class="stamp {% if latest_critical %}red{% else %}amber{% endif %}">{{ latest.stamp_label }}</span>
+      {% endif %}
+    </div>
+    <h3>{{ latest.title }}</h3>
+    {% if latest.subtitle %}<p class="post-dek">{{ latest.subtitle }}</p>{% endif %}
+    <div class="post-tags">
+      {% for tag in latest.tags limit:3 %}<span class="tag">{{ tag }}</span>{% endfor %}
+    </div>
+  </a>
 </div>
 
 <div class="filters-label">Filter by research area</div>
@@ -36,7 +56,7 @@ hide_header: true
   {% for t in post.tags %}{% assign tags_lower = tags_lower | append: t | append: "," %}{% endfor %}
   {% assign is_critical = false %}
   {% if post.cvss_score and post.cvss_score >= 9 %}{% assign is_critical = true %}{% endif %}
-  <a class="research-post{% if is_critical %} critical{% endif %}" href="{{ site.baseurl }}{{ post.url }}" data-tags="{{ tags_lower | downcase }}">
+  <a class="research-post" href="{{ site.baseurl }}{{ post.url }}" data-tags="{{ tags_lower | downcase }}">
     <div class="meta">
       <span>{{ post.date | date: "%Y-%m-%d" }}</span>
       {% if post.stamp_label %}
