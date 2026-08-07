@@ -5,7 +5,7 @@ hide_header: true
 ---
 <div class="hero">
   <div class="hero-text">
-    <div class="eyebrow">Security research and Stuff</div>
+    <div class="eyebrow">Research, rants and ramblings</div>
     <h1 class="headline">Where threats meet reality.</h1>
     <p class="lede">How intrusions actually happen, how defenses actually respond, and where the gap between the two quietly opens.</p>
     {% assign post_count = site.posts | size %}
