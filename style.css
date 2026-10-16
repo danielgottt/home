@@ -108,7 +108,9 @@ footer p{margin:0;}
   font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--fg-dim);margin-bottom:12px;
 }
-.featured-card .post-image{width:100%;height:120px;margin-bottom:14px;}
+.featured-card .post-image{width:100%;height:auto;margin-bottom:14px;}
+/* Featured image is a real <img> at natural size, so any aspect ratio fits uncropped */
+.featured-card .post-image img{display:block;width:100%;height:auto;border-radius:6px;}
 .featured-card .meta{
   display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;
   font-size:11px;color:var(--fg-dim);margin-bottom:8px;
@@ -441,7 +443,43 @@ hr{display:none;}
 /* ============================================================
    Responsive
    ============================================================ */
+/* ============================================================
+   Wide homepage (pages with `wide: true` front matter)
+   Post pages keep the 760px reading column.
+   ============================================================ */
+main.wide{max-width:1200px;}
+main.wide .hero{grid-template-columns:minmax(0,1fr) minmax(0,1.75fr);gap:44px;align-items:center;}
+main.wide .hero h1.headline{font-size:42px;}
+
+/* Featured card: image left, text right */
+main.wide .featured-card{
+  display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+  column-gap:22px;padding:18px;align-items:center;
+}
+main.wide .featured-card > *{grid-column:2;}
+main.wide .featured-card .featured-label{grid-column:1 / -1;}
+main.wide .featured-card .post-image{
+  grid-column:1;grid-row:2 / span 4;order:0;align-self:center;margin:0;
+}
+main.wide .featured-card h3{font-size:19px;}
+.featured-card .meta > span:first-child{white-space:nowrap;}
+main.wide .featured-card .post-dek{font-size:13.5px;}
+
+/* Three-up research grid; latest post lives in the hero unless filtering */
+main.wide .ledger{grid-template-columns:repeat(3, minmax(0,1fr));}
+.ledger:not(.filtered) .is-latest{display:none;}
+
+@media (max-width:1100px){
+  main.wide .hero{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);}
+  main.wide .featured-card{display:block;}
+  main.wide .featured-card .post-image{margin-bottom:14px;}
+  main.wide .ledger{grid-template-columns:repeat(2, minmax(0,1fr));}
+}
+
 @media (max-width: 680px){
+  main.wide .hero{grid-template-columns:1fr;}
+  main.wide .hero h1.headline{font-size:28px;}
+  main.wide .ledger{grid-template-columns:1fr;}
   main{padding:0 18px 60px;}
   .hero h1.headline{font-size:28px;}
   h1.post-title{font-size:26px;}
