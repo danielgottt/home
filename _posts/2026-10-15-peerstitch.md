@@ -1,18 +1,13 @@
 ---
 layout: post
-title: "FortiJump to PEERSTITCH: One FortiManager, 500 Firewalls"
-subtitle: "A pointer to my latest Unit 42 writeup on CVE-2024-47575, a memory-only FortiGate implant and certificate renewal as C2"
+title: "FortiJump to PEERSTITCH: One FortiManager, 500 Firewalls and trust you should hate"
+subtitle: "A pointer to my latest Unit 42 writeup on an edge device intrusion, a memory-only FortiGate implant and certificate renewal as C2"
 date: 2026-10-15
 header_image: /assets/images/peerstitch.png
 tags: ["CVE-2024-47575", "CVE-2025-61624", "CVE-2024-26009", "CVE-2024-26008", "Fortinet", "FortiManager", "FortiGate", "PEERSTITCH", "forensics", "vulnerability"]
-cve: "CVE-2024-47575"
-cvss_score: 9.8
 vendor: "Fortinet"
-affected_product: "FortiManager, FortiManager Cloud"
-disclosed: "2024-10-23"
-earliest_exploitation: "2024-06-27"
-patch_status: "Patched"
-stamp_label: "missing auth"
+affected_product: "FortiManager, Fortinet, FortiGate"
+stamp_label: "Never trust your edge devices"
 toc: 
   - "The Short Version"
   - "The CVEs"
