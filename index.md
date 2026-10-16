@@ -2,6 +2,7 @@
 layout: default
 title: Home
 hide_header: true
+wide: true
 ---
 <div class="hero">
   <div class="hero-text">
@@ -16,7 +17,7 @@ hide_header: true
   {% if latest.cvss_score and latest.cvss_score >= 9 %}{% assign latest_critical = true %}{% endif %}
   <a class="featured-card" href="{{ site.baseurl }}{{ latest.url }}">
     <div class="featured-label">Latest research</div>
-    <div class="post-image" role="img" aria-label="Thumbnail for {{ latest.title }}" style="background-image:url('{{ site.baseurl }}{{ latest.header_image }}');"></div>
+    <div class="post-image"><img src="{{ site.baseurl }}{{ latest.header_image }}" alt="Thumbnail for {{ latest.title }}"></div>
     <div class="meta">
       <span>{{ latest.date | date: "%Y-%m-%d" }}</span>
       {% if latest.stamp_label %}
@@ -56,7 +57,7 @@ hide_header: true
   {% for t in post.tags %}{% assign tags_lower = tags_lower | append: t | append: "," %}{% endfor %}
   {% assign is_critical = false %}
   {% if post.cvss_score and post.cvss_score >= 9 %}{% assign is_critical = true %}{% endif %}
-  <a class="research-post" href="{{ site.baseurl }}{{ post.url }}" data-tags="{{ tags_lower | downcase }}">
+  <a class="research-post{% if forloop.first %} is-latest{% endif %}" href="{{ site.baseurl }}{{ post.url }}" data-tags="{{ tags_lower | downcase }}">
     <div class="meta">
       <span>{{ post.date | date: "%Y-%m-%d" }}</span>
       {% if post.stamp_label %}
@@ -91,9 +92,12 @@ function filterByTag(tag) {
     ft.classList.toggle('active', ft.textContent.trim() === tag);
   });
 
+  // The latest post already sits in the hero; only show it in the grid while filtering.
+  document.getElementById('research-posts').classList.toggle('filtered', tag !== 'all');
+
   posts.forEach(post => {
     if (tag === 'all') {
-      post.style.display = 'block';
+      post.style.display = '';
       return;
     }
     const tags = post.getAttribute('data-tags').toLowerCase();
