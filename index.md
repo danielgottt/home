@@ -39,6 +39,7 @@ wide: true
   <button class="filter-tag" onclick="filterByTag('vulnerability')">vulnerability</button>
   <button class="filter-tag" onclick="filterByTag('threat_groups')">threat_groups</button>
   <button class="filter-tag" onclick="filterByTag('research')">research</button>
+  <button class="filter-tag" onclick="filterByTag('original_research')">original_research</button>
   <button class="filter-tag" onclick="filterByTag('mongodb')">mongodb</button>
   <button class="filter-tag" onclick="filterByTag('oracle_ebs')">oracle_ebs</button>
   <button class="filter-tag" onclick="filterByTag('sap_netweaver')">sap_netweaver</button>
@@ -100,7 +101,8 @@ function filterByTag(tag) {
       post.style.display = '';
       return;
     }
-    const tags = post.getAttribute('data-tags').toLowerCase();
+    // Exact match on the comma-separated tag list ("research" must not match "original_research")
+    const tags = post.getAttribute('data-tags').toLowerCase().split(',');
     post.style.display = tags.includes(tag.toLowerCase()) ? 'block' : 'none';
   });
 }
