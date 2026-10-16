@@ -29,6 +29,8 @@ body{
 
 a{color:var(--amber);text-decoration:none;}
 a:hover{text-decoration:underline;}
+/* Card-style links: highlight via border/title color instead of underlining every line */
+.featured-card:hover,.research-post:hover,.related-item:hover{text-decoration:none;}
 
 /* ============================================================
    Top navigation (shared across all pages)
