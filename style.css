@@ -448,22 +448,25 @@ hr{display:none;}
    Post pages keep the 760px reading column.
    ============================================================ */
 main.wide{max-width:1200px;}
-main.wide .hero{grid-template-columns:minmax(0,1fr) minmax(0,1.75fr);gap:44px;align-items:center;}
+main.wide .hero{grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:40px;align-items:center;}
 main.wide .hero h1.headline{font-size:42px;}
 
 /* Featured card: image left, text right */
 main.wide .featured-card{
-  display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
-  column-gap:22px;padding:18px;align-items:center;
+  display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);
+  column-gap:20px;padding:16px;align-items:center;
 }
 main.wide .featured-card > *{grid-column:2;}
-main.wide .featured-card .featured-label{grid-column:1 / -1;}
+main.wide .featured-card .featured-label{grid-row:1;grid-column:1;margin-bottom:14px;align-self:center;}
+/* Date + stamp share the header row with the label, right-aligned */
+main.wide .featured-card .meta{grid-row:1;grid-column:1 / -1;justify-self:end;align-self:center;margin-bottom:14px;}
+main.wide .featured-card .stamp{white-space:nowrap;}
 main.wide .featured-card .post-image{
-  grid-column:1;grid-row:2 / span 4;order:0;align-self:center;margin:0;
+  grid-column:1;grid-row:2 / span 3;order:0;align-self:center;margin:0;
 }
-main.wide .featured-card h3{font-size:19px;}
+main.wide .featured-card h3{font-size:18px;}
 .featured-card .meta > span:first-child{white-space:nowrap;}
-main.wide .featured-card .post-dek{font-size:13.5px;}
+main.wide .featured-card .post-dek{font-size:13px;}
 
 /* Three-up research grid; latest post lives in the hero unless filtering */
 main.wide .ledger{grid-template-columns:repeat(3, minmax(0,1fr));}
