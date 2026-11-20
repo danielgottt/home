@@ -40,4 +40,4 @@ CL-STA-0954 (aka UNC5820), a patient crew whose tradecraft overlaps with suspect
 
 The full post has the technical breakdown, hunting guidance, IOCs and a YARA rule.
 
-[Unit 42 Uncovers PEERSTITCH, a Stealthy FortiGate Implant](https://unit42.paloaltonetworks.com/fortimanager-cve-2024-47575-peerstitch-malware/)
+[Unit 42 Uncovers PEERSTITCH, a Stealthy FortiGate Implant](https://unit42.paloaltonetworks.com/fortimanager-cve-2024-47575-peerstitch-malware/?ref=https://danielgott.me)
